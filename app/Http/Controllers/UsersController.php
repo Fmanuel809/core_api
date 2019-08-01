@@ -23,10 +23,13 @@ class UsersController extends Controller
         return response()->json($users, 200);
     }
 
-    public function getUserById(Request $request)
+    public function getUserById(Request $request, $id)
     {
-
-        return response()->json('Users Works', 200);
+        $user = User::find($id);
+        if (!empty($user)) {
+            return response()->json($user, 200);
+        }
+        return response()->json(['error' => 'Not Found'], 404);
     }
 
     public function createUser(Request $request)
