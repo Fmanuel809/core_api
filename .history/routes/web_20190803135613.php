@@ -27,6 +27,6 @@ $router->group(['middleware' => 'content_type'], function () use ($router){
         $router->get('users/{id}', ['uses' => 'UsersController@getUserById']);
         $router->post('users', ['uses' => 'UsersController@createUser']);
         $router->put('users/{id}', ['uses' => 'UsersController@updateUser']);
-        $router->delete('users/{id}', ['uses' => 'UsersController@deleteUser']);
+        $router->delete('users/{id}', ['uses' => 'UsersController@deleteUsers']);
     });
 });

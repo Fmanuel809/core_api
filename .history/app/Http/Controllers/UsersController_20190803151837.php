@@ -78,16 +78,9 @@ class UsersController extends Controller
         return response()->json($user, 200);
     }
 
-    public function deleteUser(Request $request, $id)
+    public function deleteUser(Request $request)
     {
-        $user = User::find($id);
-        if (empty($user)) {
-            return response()->json(['error' => 'Not Found'], 400);
-        }
-
-        $user->delete();
-
-        return response()->json(['success' => "The user has been delete."], 200);
+        return response()->json('Users Works', 200);
     }
 
 }

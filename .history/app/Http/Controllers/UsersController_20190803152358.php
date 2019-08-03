@@ -85,9 +85,7 @@ class UsersController extends Controller
             return response()->json(['error' => 'Not Found'], 400);
         }
 
-        $user->delete();
-
-        return response()->json(['success' => "The user has been delete."], 200);
+        return response()->json('Users Works', 200);
     }
 
 }

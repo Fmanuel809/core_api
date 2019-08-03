@@ -4,7 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Exception;
-use App\User;
+use app\User;
 use Firebase\JWT\JWT;
 use Firebase\JWT\ExpiredException;
 
@@ -14,7 +14,7 @@ class Authenticate
     {
         $jwToken = $request->get('token');
         if (!$jwToken) {
-            return response(['error' => "Token not provided."], 401);
+            return response('Unauthorized.', 401);
         }
 
         try {

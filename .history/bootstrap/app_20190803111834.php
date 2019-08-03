@@ -67,7 +67,6 @@ $app->singleton(
 
 $app->routeMiddleware([
     'content_type' => App\Http\Middleware\ContentType::class,
-    'jwt.auth'     => App\Http\Middleware\Authenticate::class,
 ]);
 
 /*

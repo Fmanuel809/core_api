@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Validator;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -36,14 +35,6 @@ class UsersController extends Controller
 
     public function createUser(Request $request)
     {
-        $this->validate($request, [
-            'name'     => 'required|string',
-            'username' => 'required|unique:users',
-            'email'    => 'required|unique:users|email',
-            // Regex: Uppercase, Lowercase, Numbers
-            'password' => 'required|regex:"^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,15}$"',
-        ]);
-
         $data = $request->json()->all();
         $user = User::create([
             "name"     => $data['name'],
@@ -56,38 +47,17 @@ class UsersController extends Controller
 
     public function updateUser(Request $request, $id)
     {
-        $this->validate($request, [
-            'name'     => 'required|string',
-            'username' => 'required|unique:users',
-            'email'    => 'required|unique:users|email'
-        ]);
-
         $user = User::find($id);
         if (empty($user)) {
             return response()->json(['error' => 'Not Found'], 400);
         }
-
-        $data = $request->json()->all();
-        $user->fill([
-            "name"     => $data['name'],
-            "username" => $data['username'],
-            "email"    => $data['email'],
-        ]);
-        $user->save();
 
         return response()->json($user, 200);
     }
 
-    public function deleteUser(Request $request, $id)
+    public function deleteUser(Request $request)
     {
-        $user = User::find($id);
-        if (empty($user)) {
-            return response()->json(['error' => 'Not Found'], 400);
-        }
-
-        $user->delete();
-
-        return response()->json(['success' => "The user has been delete."], 200);
+        return response()->json('Users Works', 200);
     }
 
 }
