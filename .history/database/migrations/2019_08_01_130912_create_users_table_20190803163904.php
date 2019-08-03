@@ -3,7 +3,6 @@
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
-use Illuminate\Support\Facades\Hash;
 
 class CreateUsersTable extends Migration
 {
@@ -25,10 +24,10 @@ class CreateUsersTable extends Migration
 
         DB::table('users')->insert(
             array(
-                'name'       => 'admin',
-                'username'   => 'admin',
-                'email'      => 'admin@core.api',
-                'password'   => Hash::make('qwerty123')
+                'name'     => 'admin',
+                'username' => 'admin',
+                'email'    => 'admin@core.api',
+                'password' => '$2y$10$y.VAGPXxvSO1IPiTh5cko.jidnGtqJsO031osalb8C4EjtgPEMTMC'
             )
         );
     }
