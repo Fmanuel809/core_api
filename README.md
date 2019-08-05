@@ -56,7 +56,7 @@ Note: This command will create the users table in the database, and create a use
 
 ## cURL Test ⚙️
 ```
-# This is the login request, which returns a JWT, this token must be sent as a parameter in the other requests:
+# This is the login request, which returns a JWT, this token must be sent as a Authorization header in the other requests:
 
 $ curl --location --request POST "http://localhost:8080/auth/login" \
   --header "Content-Type: application/json" \
@@ -67,9 +67,10 @@ $ curl --location --request POST "http://localhost:8080/auth/login" \
 
 # Request that returns all registered users:
 
-$ curl --location --request GET "http://localhost:8080/users?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsdW1lbi1qd3QiLCJzdWIiOjEsImlhdCI6MTU2NDg1NTY2OCwiZXhwIjoxNTY0ODU5MjY4fQ.msN0YSmSbowhw8_88DAgMxeLL1346wKzJEBqDyyAVS8" \
-  --header "Content-Type: application/json"
-	
+$ curl --location --request GET "http://localhost:8080/users" \
+  --header "Content-Type: application/json" \
+  --header "Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsdW1lbi1qd3QiLCJzdWIiOjEsImlhdCI6MTU2NDg1NTY2OCwiZXhwIjoxNTY0ODU5MjY4fQ.msN0YSmSbowhw8_88DAgMxeLL1346wKzJEBqDyyAVS8"
+
 Note: In this request, the token parameter must be changed to the one returned in the login.
 ```
 

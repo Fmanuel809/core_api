@@ -12,7 +12,7 @@ class Authenticate
 {
     public function handle($request, Closure $next, $guard = null)
     {
-        $jwToken = $request->get('token');
+        $jwToken = $request->header('Authorization');
         if (!$jwToken) {
             return response(['error' => "Token not provided."], 401);
         }
