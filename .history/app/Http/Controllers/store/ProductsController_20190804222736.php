@@ -63,7 +63,7 @@ class ProductsController extends Controller
             ]);
 
             $locale = $request->header('X-Api-Locale');
-            if(!$locale) return response()->json(['error' => 'The X-Api-Locale header was not found.'], 400);
+            if(!$locale) return response()->json(['error' => 'The x-api-locale header was not found.'], 400);
 
             $product = Product::findOrFail($id);
 
