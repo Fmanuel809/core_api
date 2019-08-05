@@ -24,8 +24,8 @@ $router->group(['middleware' => 'content_type'], function () use ($router){
     $router->post('auth/login', ['uses' => 'AuthController@authenticate']);
 
     # STORE INDEX
-    $router->get('products',             ['uses' => 'Store\ProductsController@index']);
-    $router->get('products/{id}',        ['uses' => 'Store\ProductsController@get']);
+    $router->get('products',             ['uses' => 'ProductsController@index']);
+    $router->get('products/{id}',        ['uses' => 'ProductsController@get']);
 
     $router->group(['middleware' => 'jwt.auth'], function () use ($router){
         # CORE
@@ -36,8 +36,8 @@ $router->group(['middleware' => 'content_type'], function () use ($router){
         $router->delete('users/{id}',    ['uses' => 'UsersController@deleteUser']);
 
         # STORE
-        $router->post('products',        ['uses' => 'Store\ProductsController@create']);
-        $router->put('products/{id}',    ['uses' => 'Store\ProductsController@update']);
-        $router->delete('products/{id}', ['uses' => 'Store\ProductsController@delete']);
+        $router->post('products',        ['uses' => 'Store/ProductsController@create']);
+        $router->put('products/{id}',    ['uses' => 'ProductsController@update']);
+        $router->delete('products/{id}', ['uses' => 'ProductsController@delete']);
     });
 });
