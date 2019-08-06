@@ -31,7 +31,6 @@ $router->group(['middleware' => 'content_type'], function () use ($router){
         # CORE
         $router->get('users',            ['uses' => 'UsersController@index']);
         $router->get('users/{id}',       ['uses' => 'UsersController@getUserById']);
-        $router->get('getUserActive',   ['uses' => 'UsersController@getUserByToken']);
         $router->post('users',           ['uses' => 'UsersController@createUser']);
         $router->put('users/{id}',       ['uses' => 'UsersController@updateUser']);
         $router->delete('users/{id}',    ['uses' => 'UsersController@deleteUser']);

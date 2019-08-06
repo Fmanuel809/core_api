@@ -34,17 +34,6 @@ class UsersController extends Controller
         return response()->json(['error' => 'Not Found'], 400);
     }
 
-    public function getUserByToken(Request $request)
-    {
-        $jwToken = $request->header('Authorization');
-        $credentials = JWT::decode($jwToken, env('JWT_SECRET'), ['HS256']);
-        $user = User::find($credentials->sub);
-        if (!empty($user)) {
-            return response()->json($user, 200);
-        }
-        return response()->json(['error' => 'Not Found'], 400);
-    }
-
     public function createUser(Request $request)
     {
         $this->validate($request, [
