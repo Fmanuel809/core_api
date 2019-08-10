@@ -61,7 +61,7 @@ class UsersController extends Controller
             "username" => $data['username'],
             "email"    => $data['email'],
             "password" => Hash::make($data['password']),
-            "is_admin" => isset($data['is_admin']) ? $data['is_admin'] : 0,
+            "is_admin" => $data['is_admin'] ? $data['is_admin'] : 0,
         ]);
         return response()->json($user, 201);
     }
