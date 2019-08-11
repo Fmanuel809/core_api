@@ -5,7 +5,6 @@ use Validator;
 use App\Product;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\ModelNotFoundException as NotFoundError;
 
 class ProductsController extends Controller
@@ -34,17 +33,13 @@ class ProductsController extends Controller
         $this->validate($request, [
             'name'         => 'required',
             'description'  => 'required',
-            'image'        => 'required|file',
         ]);
-
-        $fileName = request()->image->getClientOriginalName().'.'.request()->fileToUpload->getClientOriginalExtension();
-        $request->image->storeAs('products', $fileName);
 
         $data = $request->json()->all();
 
         $translations = $data['translations'];
         $dataSave     = [
-            'url_image' => $fileName,
+            'url_image' => $data['url_image'],
         ];
 
         foreach ($translations as $t) {
@@ -65,7 +60,6 @@ class ProductsController extends Controller
             $this->validate($request, [
                 'name'         => 'required',
                 'description'  => 'required',
-                'image'        => 'required|file',
             ]);
 
             $locale = $request->header('X-Api-Locale');
@@ -73,12 +67,8 @@ class ProductsController extends Controller
 
             $product = Product::findOrFail($id);
 
-            Storage::delete($product->url_image);
-            $fileName = request()->image->getClientOriginalName().'.'.request()->fileToUpload->getClientOriginalExtension();
-            $request->image->storeAs('products', $fileName);
-
             $data = $request->json()->all();
-            $product->url_image = $fileName;
+            $product->url_image = $data['url_image'];
             $product->is_spent  = $data['is_spent'];
             $product->translateOrNew($locale)->name = $data['name'];
             $product->translateOrNew($locale)->description = $data['description'];
@@ -95,7 +85,6 @@ class ProductsController extends Controller
     {
         try {
             $product = Product::findOrFail($id);
-            Storage::delete($product->url_image);
             $product->delete();
             return response()->json(['success' => 'The product has been deleted.'], 200);
         } catch (NotFoundError $e) {
