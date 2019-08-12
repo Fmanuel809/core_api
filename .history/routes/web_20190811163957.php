@@ -19,13 +19,7 @@ $router->get('key', function () {
     return str_random(32);
 });
 
-$router->get('product/image/{idProduct}', ['uses' => 'Store\ProductsController@getImage']);
-
-$router->group(['middleware' => 'jwt.auth'], function () use ($router){
-    $router->post('products',        ['uses' => 'Store\ProductsController@create']);
-    $router->put('products/{id}',    ['uses' => 'Store\ProductsController@update']);
-
-});
+$router->get('image/{idProduct}', ['uses' => 'Store\ProductImageController@getImage']);
 
 $router->group(['middleware' => 'content_type'], function () use ($router){
     # LOGIN
@@ -45,6 +39,8 @@ $router->group(['middleware' => 'content_type'], function () use ($router){
         $router->delete('users/{id}',    ['uses' => 'UsersController@deleteUser']);
 
         # STORE
+        $router->post('products',        ['uses' => 'Store\ProductsController@create']);
+        $router->put('products/{id}',    ['uses' => 'Store\ProductsController@update']);
         $router->delete('products/{id}', ['uses' => 'Store\ProductsController@delete']);
     });
 });

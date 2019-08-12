@@ -14,4 +14,13 @@ class ExampleController extends Controller
     {
         //
     }
+
+    public function getImage($fileName)
+    {
+        return var_dump(app('url'));
+
+       //$response = Response::make($file, 200);
+       //$response->header("Content-Type", $type);
+       //return response()->json(['image' => $path], 200);
+    }
 }

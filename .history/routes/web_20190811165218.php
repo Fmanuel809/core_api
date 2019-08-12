@@ -21,12 +21,6 @@ $router->get('key', function () {
 
 $router->get('product/image/{idProduct}', ['uses' => 'Store\ProductsController@getImage']);
 
-$router->group(['middleware' => 'jwt.auth'], function () use ($router){
-    $router->post('products',        ['uses' => 'Store\ProductsController@create']);
-    $router->put('products/{id}',    ['uses' => 'Store\ProductsController@update']);
-
-});
-
 $router->group(['middleware' => 'content_type'], function () use ($router){
     # LOGIN
     $router->post('auth/login', ['uses' => 'AuthController@authenticate']);
@@ -45,6 +39,8 @@ $router->group(['middleware' => 'content_type'], function () use ($router){
         $router->delete('users/{id}',    ['uses' => 'UsersController@deleteUser']);
 
         # STORE
+        $router->post('products',        ['uses' => 'Store\ProductsController@create']);
+        $router->put('products/{id}',    ['uses' => 'Store\ProductsController@update']);
         $router->delete('products/{id}', ['uses' => 'Store\ProductsController@delete']);
     });
 });

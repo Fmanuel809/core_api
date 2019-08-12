@@ -46,14 +46,6 @@ $app->singleton(
     App\Console\Kernel::class
 );
 
-$app->singleton('filesystem', function ($app) {
-    return $app->loadComponent(
-        'filesystems',
-        Illuminate\Filesystem\FilesystemServiceProvider::class,
-        'filesystem'
-    );
-});
-
 /*
 |--------------------------------------------------------------------------
 | Register Middleware
@@ -75,7 +67,6 @@ $app->singleton('filesystem', function ($app) {
 
 $app->middleware([
     App\Http\Middleware\Cors::class,
-    App\Http\Middleware\HandlePutFormData::class,
 ]);
 
 $app->routeMiddleware([
@@ -109,7 +100,6 @@ $app->routeMiddleware([
 |
 */
 $app->configure('translatable');
-$app->configure('filesystems');
 
 /*
 |--------------------------------------------------------------------------

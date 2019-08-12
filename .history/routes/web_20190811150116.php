@@ -19,12 +19,9 @@ $router->get('key', function () {
     return str_random(32);
 });
 
-$router->get('product/image/{idProduct}', ['uses' => 'Store\ProductsController@getImage']);
-
-$router->group(['middleware' => 'jwt.auth'], function () use ($router){
-    $router->post('products',        ['uses' => 'Store\ProductsController@create']);
-    $router->put('products/{id}',    ['uses' => 'Store\ProductsController@update']);
-
+$router->get('image', function () {
+    use Illuminate\Support\Facades\Storage;
+    Storage::get('/img/products/i7.jpg');
 });
 
 $router->group(['middleware' => 'content_type'], function () use ($router){
@@ -45,6 +42,8 @@ $router->group(['middleware' => 'content_type'], function () use ($router){
         $router->delete('users/{id}',    ['uses' => 'UsersController@deleteUser']);
 
         # STORE
+        $router->post('products',        ['uses' => 'Store\ProductsController@create']);
+        $router->put('products/{id}',    ['uses' => 'Store\ProductsController@update']);
         $router->delete('products/{id}', ['uses' => 'Store\ProductsController@delete']);
     });
 });

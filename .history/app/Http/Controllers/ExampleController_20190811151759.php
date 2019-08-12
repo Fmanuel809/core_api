@@ -14,4 +14,9 @@ class ExampleController extends Controller
     {
         //
     }
+
+    public function getImage()
+    {
+       $prueba = Storage::get('/img/products/i7.jpg');
+    }
 }

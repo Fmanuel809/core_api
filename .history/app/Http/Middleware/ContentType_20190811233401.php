@@ -15,9 +15,9 @@ class ContentType
      */
     public function handle($request, Closure $next)
     {
-        if ($request->isJson() or preg_match('/multipart\/form-data/', $request->headers->get('Content-Type'))) {
-            return $next($request);
+        if (!$request->isJson() or $request->headers->get('Content-Type') != 'multipart/form-data') {
+            return response()->json(['error' => 'Unauthorized'], 401, []);
         }
-        return response()->json(['error' => 'Unauthorized'], 401, []);
+        return $next($request);
     }
 }

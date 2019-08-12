@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Controllers;
-use Illuminate\Support\Facades\Storage;
 
 class ExampleController extends Controller
 {
@@ -14,4 +13,6 @@ class ExampleController extends Controller
     {
         //
     }
+
+    //
 }

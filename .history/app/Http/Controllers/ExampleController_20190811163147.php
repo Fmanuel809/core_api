@@ -14,4 +14,13 @@ class ExampleController extends Controller
     {
         //
     }
+
+    public function getImage($filename)
+    {
+       $path = ('/img/products/'.$filename);
+       $file = Storage::get($path);
+       $type = Storage::mimeType($path);
+
+       return response($file, 200, ['Content-Type' => $type]);
+    }
 }

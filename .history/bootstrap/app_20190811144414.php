@@ -22,6 +22,7 @@ $app = new Laravel\Lumen\Application(
 );
 
 $app->withFacades();
+class_alias('Illuminate\Support\Facades\Storage', 'Storage');
 
 $app->withEloquent();
 
@@ -75,7 +76,6 @@ $app->singleton('filesystem', function ($app) {
 
 $app->middleware([
     App\Http\Middleware\Cors::class,
-    App\Http\Middleware\HandlePutFormData::class,
 ]);
 
 $app->routeMiddleware([

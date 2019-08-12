@@ -5,7 +5,6 @@ use Validator;
 use App\Product;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\ModelNotFoundException as NotFoundError;
 
 class ProductsController extends Controller
@@ -31,31 +30,16 @@ class ProductsController extends Controller
 
     public function create(Request $request)
     {
-
         $this->validate($request, [
-            'description'  => 'required',
             'name'         => 'required',
+            'description'  => 'required',
         ]);
 
-        $data = $request->all();
-        $translations = [
-            [
-                'locale' => 'en',
-                'name'   =>  $data['name'],
-                'description' => $data['description']
-            ],
-            [
-                'locale' => 'en',
-                'name'   =>  $data['name'],
-                'description' => $data['description']
-            ]
-        ];
+        $data = $request->json()->all();
 
-
-        $image = $request->file('image')->store('img/products');
-
+        $translations = $data['translations'];
         $dataSave     = [
-            'url_image' => $image,
+            'url_image' => $data['url_image'],
         ];
 
         foreach ($translations as $t) {
@@ -82,12 +66,10 @@ class ProductsController extends Controller
             if(!$locale) return response()->json(['error' => 'The X-Api-Locale header was not found.'], 400);
 
             $product = Product::findOrFail($id);
-            Storage::delete($product->url_image);
-            $image = $request->file('image')->store('img/products');
 
-            $data = $request->all();
-            $product->url_image = $image;
-            $product->is_spent  = 0;
+            $data = $request->json()->all();
+            $product->url_image = $data['url_image'];
+            $product->is_spent  = $data['is_spent'];
             $product->translateOrNew($locale)->name = $data['name'];
             $product->translateOrNew($locale)->description = $data['description'];
             $product->save();
@@ -103,24 +85,10 @@ class ProductsController extends Controller
     {
         try {
             $product = Product::findOrFail($id);
-            Storage::delete($product->url_image);
             $product->delete();
             return response()->json(['success' => 'The product has been deleted.'], 200);
         } catch (NotFoundError $e) {
             return response()->json(['error' => 'Product Not Found'], 400);
         }
-    }
-
-    public function getImage($idProduct)
-    {
-
-        $product = Product::find($idProduct);
-        if(!$product) exit('Not Found Image');
-
-        $path = ($product->url_image);
-        $file = Storage::get($path);
-        $type = Storage::mimeType($path);
-
-        return response($file, 200, ['Content-Type' => $type]);
     }
 }
